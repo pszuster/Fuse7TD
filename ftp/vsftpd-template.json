@@ -1,0 +1,280 @@
+{
+    "kind": "Template",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "docker-vsftpd",
+        "creationTimestamp": null
+    },
+    "parameters":
+    		[
+			{ 
+			  "name": "FTP_USR",
+			  "value": "admin",
+			  "required": false
+			},
+			{
+			 "name": "FTP_PWD",
+			 "value": "password",
+			 "required": false
+			},
+			{
+			 "name": "FTP_PASV_ADDR",
+			 "required": true
+			},
+			{
+		   	 "name": "FTP_PASV_MIN_PORT",
+			 "value": "32100",
+			 "required": true
+			},
+			{
+			 "name": "FTP_PASV_MAX_PORT",
+			 "value": "32101",
+			 "required": true
+			}
+		]
+    ,
+    "objects": [
+	    {
+    "kind": "ImageStream",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "vsftpd",
+        "generation": 2,
+        "creationTimestamp": null,
+        "labels": {
+            "app": "vsftpd"
+        }
+    },
+    "spec": {
+        "lookupPolicy": {
+            "local": false
+        },
+        "tags": [
+            {
+                "name": "latest",
+                "annotations": {
+                    "openshift.io/imported-from": "quay.io/pszuster/vsftpd"
+                },
+                "from": {
+                    "kind": "DockerImage",
+                    "name": "quay.io/pszuster/vsftpd:latest"
+                },
+                "generation": 2,
+                "importPolicy": {},
+                "referencePolicy": {
+                    "type": "Source"
+                }
+            }
+        ]
+    },
+    "status": {
+        "dockerImageRepository": ""
+    }
+}
+,
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "vsftpd",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "vsftpd"
+                },
+                "annotations": {
+                    "openshift.io/generated-by": "OpenShiftNewApp"
+                }
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {},
+                    "activeDeadlineSeconds": 21600
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "vsftpd"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "name": "vsftpd:latest"
+                            }
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "revisionHistoryLimit": 10,
+                "test": false,
+                "selector": {
+                    "app": "vsftpd",
+                    "deploymentconfig": "vsftpd"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "app": "vsftpd",
+                            "deploymentconfig": "vsftpd"
+                        },
+                        "annotations": {
+                            "openshift.io/generated-by": "OpenShiftNewApp"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "vsftpd-volume-1",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "vsftpd-volume-2",
+                                "emptyDir": {}
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "vsftpd",
+                                "image": "quay.io/pszuster/vsftpd:latest",
+                                "ports": [
+                                    {
+                                        "containerPort": 21,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 32100,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 32101,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 20,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "FTP_USER",
+                                        "value": "${FTP_USR}"
+                                    },
+                                    {
+                                        "name": "FTP_PASS",
+                                        "value": "${FTP_PWD}"
+                                    },
+                                    {
+                                        "name": "PASV_ADDRESS",
+                                        "value": "${FTP_PASV_ADDR}"
+                                    },
+                                    {
+                                        "name": "PASV_MIN_PORT",
+                                        "value": "${FTP_PASV_MIN_PORT}"
+                                    },
+                                    {
+                                        "name": "PASV_MAX_PORT",
+                                        "value": "${FTP_PASV_MAX_PORT}"
+                                    }
+                                ],
+                                "resources": {},
+                                "volumeMounts": [
+                                    {
+                                        "name": "vsftpd-volume-1",
+                                        "mountPath": "/home/vsftpd"
+                                    },
+                                    {
+                                        "name": "vsftpd-volume-2",
+                                        "mountPath": "/var/log/vsftpd"
+                                    }
+                                ],
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {},
+                        "schedulerName": "default-scheduler"
+                    }
+                }
+            },
+            "status": {
+                "latestVersion": 0,
+                "observedGeneration": 0,
+                "replicas": 0,
+                "updatedReplicas": 0,
+                "availableReplicas": 0,
+                "unavailableReplicas": 0
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "vsftpd",
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "vsftpd"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "port-1",
+                        "protocol": "TCP",
+                        "port": 20,
+                        "targetPort": 20,
+                        "nodePort": 30200
+                    },
+                    {
+                        "name": "port-2",
+                        "protocol": "TCP",
+                        "port": 21,
+                        "targetPort": 21,
+                        "nodePort": 30201
+                    },
+                    {
+                        "name": "port-3",
+                        "protocol": "TCP",
+                        "port": 32100,
+                        "targetPort": 32100,
+                        "nodePort": 32100
+                    },
+                    {
+                        "name": "port-4",
+                        "protocol": "TCP",
+                        "port": 32101,
+                        "targetPort": 32101,
+                        "nodePort": 32101
+                    }
+                ],
+                "selector": {
+                    "app": "vsftpd",
+                    "deploymentconfig": "vsftpd"
+                },
+                "type": "LoadBalancer",
+                "sessionAffinity": "None",
+                "externalTrafficPolicy": "Cluster"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        }
+    ]
+}
