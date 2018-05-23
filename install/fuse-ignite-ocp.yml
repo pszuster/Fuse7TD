@@ -225,6 +225,7 @@ objects:
   kind: DeploymentConfig
   metadata:
     labels:
+      app: Fuse Ignite
       syndesis.io/app: syndesis
       syndesis.io/type: infrastructure
       syndesis.io/component: syndesis-ui
@@ -531,6 +532,7 @@ objects:
   metadata:
     name: syndesis-db
     labels:
+      app: Fuse Ignite
       syndesis.io/app: syndesis
       syndesis.io/type: infrastructure
       syndesis.io/component: syndesis-db
@@ -653,6 +655,7 @@ objects:
   kind: DeploymentConfig
   metadata:
     labels:
+      app: Fuse Ignite
       syndesis.io/app: syndesis
       syndesis.io/type: infrastructure
       syndesis.io/component: syndesis-meta
@@ -806,6 +809,7 @@ objects:
   kind: DeploymentConfig
   metadata:
     labels:
+      app: Fuse Ignite
       syndesis.io/app: syndesis
       syndesis.io/type: infrastructure
       syndesis.io/component: syndesis-oauthproxy
@@ -938,6 +942,7 @@ objects:
   kind: DeploymentConfig
   metadata:
     labels:
+      app: Fuse Ignite
       syndesis.io/app: syndesis
       syndesis.io/type: infrastructure
       syndesis.io/component: syndesis-server
@@ -1418,6 +1423,7 @@ objects:
   metadata:
     name: syndesis-prometheus
     labels:
+      app: Fuse Ignite
       syndesis.io/app: syndesis
       syndesis.io/type: infrastructure
       syndesis.io/component: syndesis-prometheus
