@@ -1,13 +1,13 @@
 #!/bin/sh
 
 h=$(hostname -s)
-name=fisworkshop
+name=igniteworkshop
 long=${#name}
 num=${h:$long}
 
 DOMAIN=rhtechofficelatam.com
-fisDomain=fis$num.$DOMAIN
-fisHost=$name.$fisDomain
+igniteDomain=ignite$num.$DOMAIN
+igniteHost=$name.$igniteDomain
 
 
 ## IGNITE
@@ -17,6 +17,6 @@ oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/install/f
 
 var=$(oc sa get-token syndesis-oauth-client -n ignite)
 echo $var
-oc new-app --template "fuse-ignite" --param=ROUTE_HOSTNAME=fuse-ignite.$fisDomain --param=OPENSHIFT_PROJECT=ignite --param=OPENSHIFT_OAUTH_CLIENT_SECRET=$var --param=IMAGE_STREAM_NAMESPACE=openshift
+oc new-app --template "fuse-ignite" --param=ROUTE_HOSTNAME=fuse-ignite.$igniteDomain --param=OPENSHIFT_PROJECT=ignite --param=OPENSHIFT_OAUTH_CLIENT_SECRET=$var --param=IMAGE_STREAM_NAMESPACE=openshift
 
 

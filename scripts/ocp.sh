@@ -2,20 +2,20 @@
 sudo iptables -F
 
 h=$(hostname -s)
-name=fisworkshop
+name=igniteworkshop
 long=${#name}
 num=${h:$long}
 
 DOMAIN=rhtechofficelatam.com
-fisDomain=fis$num.$DOMAIN
-fisHost=$name.$fisDomain
+igniteDomain=ignite$num.$DOMAIN
+igniteHost=$name.$igniteDomain
 profile=fuse7
 
 echo y | oc-cluster destroy $profile
 rm -rf /root/.oc
 
 ### Start OC
-oc-cluster up $profile --public-hostname=$fisHost --routing-suffix=apps.$fisDomain
+oc-cluster up $profile --public-hostname=$igniteHost --routing-suffix=apps.$igniteDomain
 
 ### OC Login
 sleep 20s
@@ -37,22 +37,22 @@ oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/install/f
 
 ### CI
 #oc new-project ci --display-name="Continuous Integration"
-#oc new-app -f https://raw.githubusercontent.com/pszuster/FIS2TD/master/templates/gogs.json --param=HOSTNAME=gogs.$fisDomain
-#oc new-app -f https://raw.githubusercontent.com/pszuster/FIS2TD/master/templates/nexus_v2.json --param=HOSTNAME_HTTP=nexus.$fisDomain
+#oc new-app -f https://raw.githubusercontent.com/pszuster/FIS2TD/master/templates/gogs.json --param=HOSTNAME=gogs.$igniteDomain
+#oc new-app -f https://raw.githubusercontent.com/pszuster/FIS2TD/master/templates/nexus_v2.json --param=HOSTNAME_HTTP=nexus.$igniteDomain
 
 
 ### WebService
 #oc new-project ws --display-name="WebService"
-#oc new-app -f https://raw.githubusercontent.com/pszuster/FIS2TD/master/templates/webservice.json --param=HOSTNAME_HTTP=webservice.$fisDomain
+#oc new-app -f https://raw.githubusercontent.com/pszuster/FIS2TD/master/templates/webservice.json --param=HOSTNAME_HTTP=webservice.$igniteDomain
 
 
 ### FTP
 oc new-project ftp --display-name="FTP Server"
 oc adm policy add-scc-to-user anyuid system:serviceaccount:ftp:default
-oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/ftp/vsftpd-template.json --param=FTP_PASV_ADDR=$fisHost | oc create -f -
+oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/ftp/vsftpd-template.json --param=FTP_PASV_ADDR=$igniteHost | oc create -f -
 
 ### CRM
 oc new-project opencrx --display-name="CRM"
 oc adm policy add-scc-to-user anyuid system:serviceaccount:opencrx:default
-oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/crm/opencrx-template.json --param=OpenCRX_URL=opencrx.$fisDomain | oc create -f -
+oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/crm/opencrx-template.json --param=OpenCRX_URL=opencrx.$igniteDomain | oc create -f -
 
