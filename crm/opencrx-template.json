@@ -1,0 +1,278 @@
+{
+    "kind": "Template",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "opencrx",
+        "creationTimestamp": null
+    },
+    "parameters":
+    [
+	    {
+		    "name": "OpenCRX_URL",
+		    "value": "opencrx.fis1.rhtechofficelatam.com",
+		    "required": true
+	    }
+    ],
+    "objects": [
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "opencrx",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "opencrx"
+                },
+                "annotations": {
+                    "openshift.io/generated-by": "OpenShiftWebConsole"
+                }
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {},
+                    "activeDeadlineSeconds": 21600
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "opencrx"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "namespace": "opencrx",
+                                "name": "opencrx:4.1"
+                            }
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "test": false,
+                "selector": {
+                    "app": "opencrx",
+                    "deploymentconfig": "opencrx"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "app": "opencrx",
+                            "deploymentconfig": "opencrx"
+                        },
+                        "annotations": {
+                            "openshift.io/generated-by": "OpenShiftWebConsole"
+                        }
+                    },
+                    "spec": {
+                        "volumes": [
+                            {
+                                "name": "opencrx-1",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "opencrx-2",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "opencrx-3",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "opencrx-4",
+                                "emptyDir": {}
+                            },
+                            {
+                                "name": "opencrx-5",
+                                "emptyDir": {}
+                            }
+                        ],
+                        "containers": [
+                            {
+                                "name": "opencrx",
+                                "image": "quay.io/pszuster/opencrx@sha256:0852aab657022b9346ee4468988eb91355aa6b6b85bc0a62bdfcd6766aac5c02",
+                                "ports": [
+                                    {
+                                        "containerPort": 80,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 8001,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 8009,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "volumeMounts": [
+                                    {
+                                        "name": "opencrx-1",
+                                        "mountPath": "/root/opt/opencrx/apache-tomee-webprofile-1.7.4/airsyncdir"
+                                    },
+                                    {
+                                        "name": "opencrx-2",
+                                        "mountPath": "/root/opt/opencrx/apache-tomee-webprofile-1.7.4/logs"
+                                    },
+                                    {
+                                        "name": "opencrx-3",
+                                        "mountPath": "/root/opt/opencrx/apache-tomee-webprofile-1.7.4/maildir"
+                                    },
+                                    {
+                                        "name": "opencrx-4",
+                                        "mountPath": "/root/opt/opencrx/apache-tomee-webprofile-1.7.4/temp"
+                                    },
+                                    {
+                                        "name": "opencrx-5",
+                                        "mountPath": "/root/opt/opencrx/apache-tomee-webprofile-1.7.4/work"
+                                    }
+                                ],
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "imagePullPolicy": "IfNotPresent"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {},
+                        "schedulerName": "default-scheduler"
+                    }
+                }
+            },
+            "status": {
+                "latestVersion": 0,
+                "observedGeneration": 0,
+                "replicas": 0,
+                "updatedReplicas": 0,
+                "availableReplicas": 0,
+                "unavailableReplicas": 0
+            }
+        },
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "opencrx",
+                "generation": 2,
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "opencrx"
+                },
+                "annotations": {
+                    "openshift.io/image.dockerRepositoryCheck": "2018-05-21T18:01:08Z"
+                }
+            },
+            "spec": {
+                "lookupPolicy": {
+                    "local": false
+                },
+                "tags": [
+                    {
+                        "name": "4.1",
+                        "annotations": {
+                            "openshift.io/generated-by": "OpenShiftWebConsole",
+                            "openshift.io/imported-from": "quay.io/pszuster/opencrx:4.1"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "quay.io/pszuster/opencrx:4.1"
+                        },
+                        "generation": 2,
+                        "importPolicy": {},
+                        "referencePolicy": {
+                            "type": "Source"
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "dockerImageRepository": ""
+            }
+        },
+        {
+            "kind": "Route",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "opencrx",
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "opencrx"
+                },
+                "annotations": {
+                    "openshift.io/host.generated": "true"
+                }
+            },
+            "spec": {
+                "host": "${OpenCRX_URL}",
+                "to": {
+                    "kind": "Service",
+                    "name": "opencrx",
+                    "weight": 100
+                },
+                "port": {
+                    "targetPort": "80-tcp"
+                },
+                "wildcardPolicy": "None"
+            }
+	},
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "opencrx",
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "opencrx"
+                },
+                "annotations": {
+                    "openshift.io/generated-by": "OpenShiftWebConsole"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "80-tcp",
+                        "protocol": "TCP",
+                        "port": 80,
+                        "targetPort": 80
+                    },
+                    {
+                        "name": "8001-tcp",
+                        "protocol": "TCP",
+                        "port": 8001,
+                        "targetPort": 8001
+                    },
+                    {
+                        "name": "8009-tcp",
+                        "protocol": "TCP",
+                        "port": 8009,
+                        "targetPort": 8009
+                    }
+                ],
+                "selector": {
+                    "deploymentconfig": "opencrx"
+                },
+                "type": "ClusterIP",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        }
+    ]
+}
