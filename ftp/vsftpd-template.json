@@ -19,7 +19,8 @@
 			},
 			{
 			 "name": "FTP_PASV_ADDR",
-			 "required": true
+			 "required": true,
+			 "value": "vsftpd.ftp.svc.cluster.local"
 			},
 			{
 		   	 "name": "FTP_PASV_MIN_PORT",
