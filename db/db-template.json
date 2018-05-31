@@ -296,12 +296,7 @@
                             "automatic": true,
                             "containerNames": [
                                 "pgadmin4"
-                            ],
-                            "from": {
-                                "kind": "ImageStreamTag",
-                                "namespace": "pgadmin",
-                                "name": "pgadmin4:latest"
-                            }
+                            ]
                         }
                     }
                 ],
@@ -332,7 +327,7 @@
                         "containers": [
                             {
                                 "name": "pgadmin4",
-                                "image": "docker.io/dpage/pgadmin4@sha256:33a292774dee0acf2d62d4de751ad56d4436e65ce8c3378be332e642aa6a4e9a",
+                                "image": "quay.io/pszuster/pgadmin4",
                                 "ports": [
                                     {
                                         "containerPort": 80,
@@ -346,7 +341,7 @@
                                 "env": [
                                     {
                                         "name": "PGADMIN_DEFAULT_EMAIL",
-                                        "value": "pablo@pablo.com"
+                                        "value": "ignite@ignite.com"
                                     },
                                     {
                                         "name": "PGADMIN_DEFAULT_PASSWORD",
@@ -372,14 +367,6 @@
                         "schedulerName": "default-scheduler"
                     }
                 }
-            },
-            "status": {
-                "latestVersion": 0,
-                "observedGeneration": 0,
-                "replicas": 0,
-                "updatedReplicas": 0,
-                "availableReplicas": 0,
-                "unavailableReplicas": 0
             }
         }
     ]
