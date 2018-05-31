@@ -285,18 +285,7 @@
                     },
                     "resources": {},
                     "activeDeadlineSeconds": 21600
-                },
-                "triggers": [
-                    {
-                        "type": "ConfigChange"
-                    },
-                    {
-                        "type": "ImageChange",
-                        "imageChangeParams": {
-                            "automatic": true,
-                            "containerNames": [
-                                "pgadmin4"
-                            ]
+                }
                         }
                     }
                 ],
