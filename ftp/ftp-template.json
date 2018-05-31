@@ -31,11 +31,160 @@
 			 "name": "FTP_PASV_MAX_PORT",
 			 "value": "32101",
 			 "required": true
-			}
+			},
+			{
+		    "name": "NET2FTP_HOSTNAME",
+		    "required": true,
+		    "description": "route hostname for net2ftp",
+		    "value": "net2ftp-ftp.ignite1.rhtechofficelatam.com"
+	              }
 		]
     ,
     "objects": [
-	    {
+	            {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "net2ftp",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "net2ftp"
+                },
+                "annotations": {
+                    "openshift.io/generated-by": "OpenShiftWebConsole"
+                }
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {},
+                    "activeDeadlineSeconds": 21600
+                },
+                "replicas": 1,
+                "test": false,
+                "selector": {
+                    "deploymentconfig": "net2ftp"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "app": "net2ftp",
+                            "deploymentconfig": "net2ftp"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "net2ftp",
+                                "image": "quay.io/pszuster/net2ftp:latest",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    },
+                                    {
+                                        "containerPort": 8443,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "terminationMessagePolicy": "File",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {},
+                        "schedulerName": "default-scheduler"
+                    }
+                }
+            },
+            "status": {
+                "latestVersion": 0,
+                "observedGeneration": 0,
+                "replicas": 0,
+                "updatedReplicas": 0,
+                "availableReplicas": 0,
+                "unavailableReplicas": 0
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "net2ftp",
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "net2ftp"
+                },
+                "annotations": {
+                    "openshift.io/generated-by": "OpenShiftWebConsole"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "8080-tcp",
+                        "protocol": "TCP",
+                        "port": 8080,
+                        "targetPort": 8080
+                    },
+                    {
+                        "name": "8443-tcp",
+                        "protocol": "TCP",
+                        "port": 8443,
+                        "targetPort": 8443
+                    }
+                ],
+                "selector": {
+                    "deploymentconfig": "net2ftp"
+                },
+                "type": "ClusterIP",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "kind": "Route",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "net2ftp",
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "net2ftp"
+                },
+                "annotations": {
+                    "openshift.io/generated-by": "OpenShiftWebConsole",
+                    "openshift.io/host.generated": "true"
+                }
+            },
+            "spec": {
+                "host": "${NET2FTP_HOSTNAME}",
+                "to": {
+                    "kind": "Service",
+                    "name": "net2ftp",
+                    "weight": 100
+                },
+                "port": {
+                    "targetPort": "8080-tcp"
+                },
+                "wildcardPolicy": "None"
+            }
+        }
+,	    {
     "kind": "ImageStream",
     "apiVersion": "v1",
     "metadata": {
