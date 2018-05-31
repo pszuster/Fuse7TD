@@ -30,10 +30,10 @@ oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/install/f
 ### Create Assets
 
 ### DB
-#oc new-project db --display-name="Database"
-#oc adm policy add-scc-to-user anyuid system:serviceaccount:db:default
-#oc create -f https://raw.githubusercontent.com/pszuster/FIS2TD/master/templates/pgsql-db.json
-#oc new-app --template=fis2td-db
+oc new-project db --display-name="Database"
+oc adm policy add-scc-to-user anyuid system:serviceaccount:db:default
+oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/db/db-template.json
+oc new-app --template=db-template --param=DB_ROUTE=db.$igniteDomain
 
 ### CI
 #oc new-project ci --display-name="Continuous Integration"
@@ -49,7 +49,7 @@ oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/install/f
 ### FTP
 oc new-project ftp --display-name="FTP Server"
 oc adm policy add-scc-to-user anyuid system:serviceaccount:ftp:default
-oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/ftp/vsftpd-template.json --param=FTP_PASV_ADDR=$igniteHost | oc create -f -
+oc process -f https://raw.githubusercontent.com/pszuster/Fuse7tTD/master/ftp/ftp-template.json --param=NET2FTP_HOSTNAME=ftp.$fisDomain | oc create -f -
 
 ### CRM
 oc new-project opencrx --display-name="CRM"

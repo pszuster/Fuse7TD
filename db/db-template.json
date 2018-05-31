@@ -61,14 +61,13 @@
             "name": "postgresql",
             "protocol": "TCP",
             "port": 5432,
-            "targetPort": 5432,
-            "nodePort": 30432
+            "targetPort": 5432
           }
         ],
         "selector": {
           "name": "${DATABASE_SERVICE_NAME}"
         },
-        "type": "LoadBalancer",
+        "type": "ClusterIP",
         "sessionAffinity": "None"
       },
       "status": {
@@ -259,7 +258,7 @@
                 "wildcardPolicy": "None"
             }
         },
-        {
+	{
             "kind": "DeploymentConfig",
             "apiVersion": "v1",
             "metadata": {
@@ -285,10 +284,7 @@
                     },
                     "resources": {},
                     "activeDeadlineSeconds": 21600
-                }
-                        }
-                    }
-                ],
+                },
                 "replicas": 1,
                 "test": false,
                 "selector": {
@@ -330,7 +326,7 @@
                                 "env": [
                                     {
                                         "name": "PGADMIN_DEFAULT_EMAIL",
-                                        "value": "ignite@ignite.com"
+                                        "value": "ignite@redhat.com"
                                     },
                                     {
                                         "name": "PGADMIN_DEFAULT_PASSWORD",

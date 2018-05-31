@@ -36,7 +36,7 @@
 		    "name": "NET2FTP_HOSTNAME",
 		    "required": true,
 		    "description": "route hostname for net2ftp",
-		    "value": "net2ftp-ftp.ignite1.rhtechofficelatam.com"
+		    "value": "ftp.ignite1.rhtechofficelatam.com"
 	              }
 		]
     ,
