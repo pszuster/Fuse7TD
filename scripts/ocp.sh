@@ -49,7 +49,7 @@ oc new-app --template=db-template --param=DB_ROUTE=db.$igniteDomain
 ### FTP
 oc new-project ftp --display-name="FTP Server"
 oc adm policy add-scc-to-user anyuid system:serviceaccount:ftp:default
-oc process -f https://raw.githubusercontent.com/pszuster/Fuse7tTD/master/ftp/ftp-template.json --param=NET2FTP_HOSTNAME=ftp.$fisDomain | oc create -f -
+oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/ftp/ftp-template.json --param=NET2FTP_HOSTNAME=ftp.$fisDomain | oc create -f -
 
 ### CRM
 oc new-project opencrx --display-name="CRM"
