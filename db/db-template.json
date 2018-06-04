@@ -10,13 +10,13 @@
             "displayName": "Application Name",
             "description": "The name for the application.",
             "name": "APPLICATION_NAME",
-            "value": "ignite-td-db",
+            "value": "ignitedb",
             "required": true
         },
         {
             "description": "DB Service Name",
             "name": "DATABASE_SERVICE_NAME",
-            "value": "ignite-td-db",
+            "value": "ignitedb",
             "required": true
         },
 	{
