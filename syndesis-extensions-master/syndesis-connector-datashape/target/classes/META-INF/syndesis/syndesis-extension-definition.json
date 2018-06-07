@@ -1,0 +1,25 @@
+{
+  "schemaVersion" : "v1",
+  "name" : "DataShape Connector",
+  "description" : "DataShape Connector for Syndesis",
+  "icon" : "extension:icon.png",
+  "extensionId" : "io.syndesis.extensions:syndesis-connector-datashape",
+  "version" : "1.0.0",
+  "actions" : [ {
+    "id" : "io.syndesis:datashape-action",
+    "name" : "DataShape Endpoint",
+    "description" : "DataShape Endpoint",
+    "descriptor" : {
+      "componentScheme" : "mock",
+      "inputDataShape" : {
+        "kind" : "none"
+      },
+      "outputDataShape" : {
+        "kind" : "any"
+      }
+    },
+    "actionType" : "connector",
+    "pattern" : "To"
+  } ],
+  "extensionType" : "Connectors"
+}

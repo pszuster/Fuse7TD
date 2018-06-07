@@ -26,7 +26,7 @@ chcat -d /root/.oc/profiles/$profile/volumes/vol{01..10}
 
 ### IMPORT IMAGE STREAMS
 oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/install/fuse-ignite-image-streams.yml -n openshift
-
+oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/amq/amq63-image-stream.json
 ### Create Assets
 
 ### DB
@@ -56,3 +56,6 @@ oc new-project opencrx --display-name="CRM"
 oc adm policy add-scc-to-user anyuid system:serviceaccount:opencrx:default
 oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/crm/opencrx-template.json --param=OpenCRX_URL=opencrx.$igniteDomain | oc create -f -
 
+### AMQ
+oc new-project amq --display-name="Red Hat AMQ"
+oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/amq/amq63-basic.json --param=MQ_QUEUES=invoices --param=MQ_USERNAME=admin --param=MQ_PASSWORD=password | oc create -f -

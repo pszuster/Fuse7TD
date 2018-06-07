@@ -1,0 +1,21 @@
+{
+    "schemaVersion": "v1",
+    "actions": [
+        {
+            "name": "DataShape Endpoint",
+            "description": "DataShape Endpoint",
+            "id": "io.syndesis:datashape-action",
+            "pattern": "To",
+            "actionType": "connector",
+            "descriptor": {
+                "componentScheme": "mock",
+                "inputDataShape": {
+                    "kind": "none"
+                },
+                "outputDataShape": {
+                    "kind": "any"
+                }
+             }
+        }
+    ]
+}
