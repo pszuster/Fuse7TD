@@ -62,3 +62,8 @@ oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/crm/open
 ### AMQ
 oc new-project amq --display-name="Red Hat AMQ"
 oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/amq/amq63-basic.json --param=MQ_QUEUES=invoices --param=MQ_USERNAME=admin --param=MQ_PASSWORD=password | oc create -f -
+
+### RHDG
+oc new-project rhdg --display-name="Red Hat Data Grid"
+oc new-app --name=stockcache --image-stream=jboss-datagrid71-openshift:1.3 -e INFINISPAN_CONNECTORS=rest -e CACHE_NAMES=stock
+oc expose svc stockcache --hostname=rhdg.$igniteDomain
