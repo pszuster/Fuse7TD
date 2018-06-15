@@ -1,0 +1,7 @@
+<invoice number="123">
+	<invoiceName>Ignite_1</invoiceName>
+	<invoiceDescription>Ignite Invoice #1</invoiceDescription>
+	<totalBaseAmount>1000</totalBaseAmount>
+	<totalTaxAmount>100</totalTaxAmount>
+	<totalAmountIncludingTax>1100</totalAmountIncludingTax>
+</invoice>

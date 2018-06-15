@@ -1,0 +1,23 @@
+<invoices>
+	<invoice number="123">
+		<invoiceName>Ignite_1</invoiceName>
+		<invoiceDescription>Ignite Invoice #1</invoiceDescription>
+		<totalBaseAmount>1000</totalBaseAmount>
+		<totalTaxAmount>100</totalTaxAmount>
+		<totalAmountIncludingTax>1100</totalAmountIncludingTax>
+	</invoice>
+	<invoice number="456">
+		<invoiceName>Ignite_2</invoiceName>
+		<invoiceDescription>Ignite Invoice #2</invoiceDescription>
+		<totalBaseAmount>2000</totalBaseAmount>
+		<totalTaxAmount>200</totalTaxAmount>
+		<totalAmountIncludingTax>2200</totalAmountIncludingTax>
+	</invoice>
+	<invoice number="789">
+		<invoiceName>Ignite_3</invoiceName>
+		<invoiceDescription>Ignite Invoice #3</invoiceDescription>
+		<totalBaseAmount>3000</totalBaseAmount>
+		<totalTaxAmount>300</totalTaxAmount>
+		<totalAmountIncludingTax>3300</totalAmountIncludingTax>
+	</invoice>
+</invoices>
