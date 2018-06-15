@@ -27,8 +27,8 @@ chcat -d /root/.oc/profiles/$profile/volumes/vol{01..10}
 ### IMPORT IMAGE STREAMS
 oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/install/fuse-ignite-image-streams.yml -n openshift
 oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/amq/amq63-image-stream.json -n openshift
-oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/rhdg/datagrid71-image-stream.json - openshift
-
+oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/rhdg/datagrid71-image-stream.json -n openshift
+oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/StockApp/openjdk18-image-stream.json -n openshift
 ### Create Assets
 
 ### DB
@@ -45,7 +45,7 @@ oc new-app --template=db-template --param=DB_ROUTE=db.$igniteDomain
 
 ### WebService
 oc new-project stockapp --display-name="RHOAR - Stock App"
-oc new-app -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/StockApp/openjdk18-image-stream.json~https://github.com/pszuster/Fuse7TD --context-dir="StockApp" --name="stockapp"
+oc new-app redhat-openjdk18-openshift:1.3~https://github.com/pszuster/Fuse7TD --context-dir="StockApp" --name="stockapp"
 oc expose svc stockapp --hostname=stock.$igniteDomain
 
 

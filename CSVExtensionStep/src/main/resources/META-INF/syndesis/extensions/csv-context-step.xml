@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<routes id="routes-1" xmlns="http://camel.apache.org/schema/spring"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
+    <route id="_route1">
+        <from id="_to1" uri="direct:csv"/>
+        <toD id="_toD1" uri="dataformat:csv:unmarshal?header=${header.columnlist}&amp;useMaps=true"/>
+        <marshal id="_marshal1">
+            <json library="Jackson" useList="true"/>
+        </marshal>
+        <convertBodyTo id="_convertBodyTo1" type="java.lang.String"/>
+    </route>
+</routes>

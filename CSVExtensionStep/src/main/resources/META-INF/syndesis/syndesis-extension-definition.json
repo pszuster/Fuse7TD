@@ -1,0 +1,42 @@
+{
+  "schemaVersion" : "v1",
+  "name" : "CSV Extension STEP",
+  "extensionId" : "com.jbossbank.CSVExtension",
+  "version" : "1.0.0",
+  "actions" : [ {
+    "id" : "Process CSV",
+    "name" : "Process CSV",
+    "description" : "Process a CSV",
+    "descriptor" : {
+      "kind" : "ENDPOINT",
+      "entrypoint" : "direct:csv",
+      "inputDataShape" : {
+        "kind" : "any"
+      },
+      "outputDataShape" : {
+        "kind" : "any"
+      },
+      "propertyDefinitionSteps" : [ {
+        "description" : "Define your Log message",
+        "name" : "Log Body",
+        "properties" : {
+          "columnList" : {
+            "kind" : "parameter",
+            "displayName" : "CSV Column List",
+            "required" : true,
+            "type" : "string",
+            "javaType" : "String",
+            "deprecated" : false,
+            "secret" : false,
+            "componentProperty" : false,
+            "description" : "A comma separated list of columns"
+          }
+        }
+      } ],
+      "resource" : "classpath:META-INF/syndesis/extensions/csv-context-step.xml"
+    },
+    "tags" : [ "xml" ],
+    "actionType" : "step"
+  } ],
+  "extensionType" : "Steps"
+}
