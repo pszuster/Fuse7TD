@@ -1,0 +1,53 @@
+{
+  "schemaVersion" : "v1",
+  "name" : "CSV Extension STEP",
+  "description" : "Logs a message body with a prefix",
+  "extensionId" : "com.jbossbank.CSVExtension",
+  "version" : "1.0.0",
+  "actions" : [ {
+    "id" : "Process CSV",
+    "name" : "Process CSV",
+    "description" : "Process a CSV",
+    "descriptor" : {
+      "kind" : "ENDPOINT",
+      "entrypoint" : "direct:csv",
+      "resource" : "classpath:META-INF/syndesis/extensions/csv-context-step.xml",
+      "inputDataShape" : {
+        "kind" : "any"
+      },
+      "outputDataShape" : {
+        "kind" : "any"
+      },
+      "propertyDefinitionSteps" : [ {
+        "description" : "Define your Log message",
+        "name" : "Log Body",
+        "properties" : {
+          "columnList" : {
+            "componentProperty" : false,
+            "deprecated" : false,
+            "description" : "A comma separated list of columns",
+            "displayName" : "CSV Column List",
+            "javaType" : "String",
+            "kind" : "parameter",
+            "required" : true,
+            "secret" : false,
+            "type" : "string"
+          }
+        }
+      } ]
+    },
+    "tags" : [ "xml" ],
+    "actionType" : "step"
+  } ],
+  "dependencies" : [ {
+    "type" : "MAVEN",
+    "id" : "io.syndesis.extension:extension-api:jar:1.3.10.fuse-000001-redhat-1"
+  }, {
+    "type" : "MAVEN",
+    "id" : "org.apache.camel:camel-csv:jar:2.21.0.fuse-000077-redhat-1"
+  }, {
+    "type" : "MAVEN",
+    "id" : "org.apache.camel:camel-jackson:jar:2.21.0.fuse-000077-redhat-1"
+  } ],
+  "extensionType" : "Steps"
+}
