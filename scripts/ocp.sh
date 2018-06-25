@@ -15,13 +15,14 @@ if [[ $myGUID == 'repl' ]]
 else
 
 	DOMAIN=$myGUID.generic.opentlc.com
+	HOST=fuseignite-$DOMAIN
 fi
 echo DOMAIN: $DOMAIN
 profile=ignite
 
 echo y | /home/jboss/oc-cluster-wrapper/oc-cluster destroy $profile
 rm -rf /root/.oc
-/home/jboss/oc-cluster-wrapper/oc-cluster up $profile --public-hostname=$DOMAIN --routing-suffix=apps.$DOMAIN
+/home/jboss/oc-cluster-wrapper/oc-cluster up $profile --public-hostname=$HOST --routing-suffix=apps.$DOMAIN
 
 sleep 10s
 
