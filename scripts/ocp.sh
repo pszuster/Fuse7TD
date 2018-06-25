@@ -12,6 +12,7 @@ echo GUID: $myGUID
 if [[ $myGUID == 'repl' ]]
    then
 	DOMAIN=$myExtIP.xip.io
+	HOST=$DOMAIN
 else
 
 	DOMAIN=$myGUID.generic.opentlc.com
