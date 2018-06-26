@@ -46,25 +46,25 @@ oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/StockApp/
 oc new-project db --display-name="Database"
 oc adm policy add-scc-to-user anyuid system:serviceaccount:db:default
 oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/db/db-template.json
-oc new-app --template=db-template --param=DB_ROUTE=db.$DOMAIN
+oc new-app --template=db-template --param=DB_ROUTE=db.$SUFFIX
 
 
 ### WebService
 sleep 10s
 oc new-project stockapp --display-name="RHOAR - Stock App"
 oc new-app redhat-openjdk18-openshift:1.3~https://github.com/pszuster/Fuse7TD --context-dir="StockApp" --name="stockapp"
-oc expose svc stockapp --hostname=stock.$DOMAIN
+oc expose svc stockapp --hostname=stock.$SUFFIX
 
 
 ### FTP
 oc new-project ftp --display-name="FTP Server"
 oc adm policy add-scc-to-user anyuid system:serviceaccount:ftp:default
-oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/ftp/ftp-template.json --param=NET2FTP_HOSTNAME=ftp.$DOMAIN | oc create -f -
+oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/ftp/ftp-template.json --param=NET2FTP_HOSTNAME=ftp.$SUFFIX | oc create -f -
 
 ### CRM
 oc new-project opencrx --display-name="CRM"
 oc adm policy add-scc-to-user anyuid system:serviceaccount:opencrx:default
-oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/crm/opencrx-template.json --param=OpenCRX_URL=opencrx.$DOMAIN | oc create -f -
+oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/crm/opencrx-template.json --param=OpenCRX_URL=opencrx.$SUFFIX | oc create -f -
 
 ### AMQ
 oc new-project amq --display-name="Red Hat AMQ"
@@ -73,7 +73,7 @@ oc process -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/amq/amq6
 ### RHDG
 oc new-project rhdg --display-name="Red Hat Data Grid"
 oc new-app --name=stockcache --image-stream=jboss-datagrid71-openshift:1.3 -e INFINISPAN_CONNECTORS=rest -e CACHE_NAMES=stock
-oc expose svc stockcache --hostname=rhdg.$DOMAIN
+oc expose svc stockcache --hostname=rhdg.$SUFFIX
 
 ## IGNITE
 oc new-project ignite --display-name="Fuse Ignite"
@@ -84,5 +84,5 @@ sleep 5s
 
 echo y | sudo oc login https://localhost:8443 --username=admin --password=admin --insecure-skip-tls-verify
 var=$(sudo oc sa get-token syndesis-oauth-client -n ignite)
-oc new-app --template "fuse-ignite" --param=ROUTE_HOSTNAME=fuse-ignite.$DOMAIN --param=OPENSHIFT_PROJECT=ignite --param=OPENSHIFT_OAUTH_CLIENT_SECRET=$var --param=IMAGE_STREAM_NAMESPACE=openshift
+oc new-app --template "fuse-ignite" --param=ROUTE_HOSTNAME=fuse-ignite.$SUFFIX --param=OPENSHIFT_PROJECT=ignite --param=OPENSHIFT_OAUTH_CLIENT_SECRET=$var --param=IMAGE_STREAM_NAMESPACE=openshift
 
