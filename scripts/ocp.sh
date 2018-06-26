@@ -13,17 +13,19 @@ if [[ $myGUID == 'repl' ]]
    then
 	DOMAIN=$myExtIP.xip.io
 	HOST=$DOMAIN
+	SUFFIX=apps.$DOMAIN
 else
 
 	DOMAIN=$myGUID.generic.opentlc.com
 	HOST=fuseignite-$DOMAIN
+	SUFFIX=apps-$DOMAIN
 fi
 echo DOMAIN: $DOMAIN
 profile=ignite
 
 echo y | /home/jboss/oc-cluster-wrapper/oc-cluster destroy $profile
 rm -rf /root/.oc
-/home/jboss/oc-cluster-wrapper/oc-cluster up $profile --public-hostname=$HOST --routing-suffix=apps.$DOMAIN
+/home/jboss/oc-cluster-wrapper/oc-cluster up $profile --public-hostname=$HOST --routing-suffix=$SUFFIX
 
 sleep 10s
 
