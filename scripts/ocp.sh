@@ -45,6 +45,7 @@ oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/StockApp/
 ### GitBook
 oc new-project gitbook --display-name="GitBook"
 oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/gitbookApp/gitbook-template.json
+oc adm policy add-scc-to-user anyuid system:serviceaccount:gitbook:default
 oc new-app --template=gitbook --param=ROUTE_HOSTNAME=gitbook.$SUFFIX --param=GUID_PARAM=$myGUID --param=GITBOOK_URL_PARAM=https://github.com/pszuster/fuse7td-gitbookv2
 
 ### DB
