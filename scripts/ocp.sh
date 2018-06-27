@@ -42,6 +42,11 @@ oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/rhdg/data
 oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/StockApp/openjdk18-image-stream.json -n openshift
 ### Create Assets
 
+### GitBook
+oc new-project gitbook --display-name="GitBook"
+oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/gitbook/gitbook-template.json
+oc new-app --template=gitbook --param=ROUTE_HOSTNAME=gitbook.$SUFFIX --param=GUID_PARAM=$myGUID --param=GITBOOK_URL=https://github.com/pszuster/fuse7td-gitbookv2
+
 ### DB
 oc new-project db --display-name="Database"
 oc adm policy add-scc-to-user anyuid system:serviceaccount:db:default
