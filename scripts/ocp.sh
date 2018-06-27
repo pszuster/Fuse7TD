@@ -45,7 +45,7 @@ oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/StockApp/
 ### GitBook
 oc new-project gitbook --display-name="GitBook"
 oc create -f https://raw.githubusercontent.com/pszuster/Fuse7TD/master/gitbookApp/gitbook-template.json
-oc new-app --template=gitbook --param=ROUTE_HOSTNAME=gitbook.$SUFFIX --param=GUID_PARAM=$myGUID --param=GITBOOK_URL=https://github.com/pszuster/fuse7td-gitbookv2
+oc new-app --template=gitbook --param=ROUTE_HOSTNAME=gitbook.$SUFFIX --param=GUID_PARAM=$myGUID --param=GITBOOK_URL_PARAM=https://github.com/pszuster/fuse7td-gitbookv2
 
 ### DB
 oc new-project db --display-name="Database"
