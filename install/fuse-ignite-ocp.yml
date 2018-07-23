@@ -95,7 +95,7 @@ parameters:
 - description: Namespace containing image streams
   displayName: Image Stream Namespace
   name: IMAGE_STREAM_NAMESPACE
-  value: 'fuse-ignite'
+  value: 'openshift'
 - description: Secret to use to encrypt oauth cookies
   displayName: OAuth Cookie Secret
   name: OAUTH_COOKIE_SECRET
