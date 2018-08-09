@@ -35,6 +35,12 @@ public class StockEndpoint {
 		
 		return Response.ok(stockCSV).build();
 	}
+
+	@GET
+	@PATH("/")
+	public String get(){
+		return "OK";
+	}
 	
 	
 
