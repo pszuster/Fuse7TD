@@ -37,7 +37,7 @@ public class StockEndpoint {
 	}
 
 	@GET
-	@PATH("/")
+	@Path("/")
 	public String get(){
 		return "OK";
 	}
